@@ -1,6 +1,6 @@
 [package]
 name = "themify"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "GPL-3.0"
 description = "A very simple program to apply a color palette to an image, based on minimal color distance."
