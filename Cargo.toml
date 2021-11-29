@@ -8,5 +8,5 @@ description = "A very simple program to apply a color palette to an image, based
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-image = "*"
-hex = "*"
+image = "0.23.14"
+hex = "0.4.3"
