@@ -2,6 +2,8 @@
 name = "themify"
 version = "0.1.0"
 edition = "2021"
+license = "GPL"
+description = "A very simple program to apply a color palette to an image, based on minimal color distance."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
