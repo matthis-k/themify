@@ -1,9 +1,34 @@
+use dirs::home_dir;
 use hex::FromHex;
 use image::io::Reader;
+use structopt::StructOpt;
+
+#[derive(Debug, StructOpt)]
+#[structopt(
+    name = "themify",
+    about = "A cli tool to apply a color palette to an image"
+)]
+struct Opt {
+    /// Path to the input file
+    #[structopt(short)]
+    input: String,
+    /// Path to the output file
+    #[structopt(short)]
+    output: String,
+    /// name of the color palette in $HOME/.config/themify/palettes
+    #[structopt(short)]
+    palette: String,
+}
+
 fn main() -> image::error::ImageResult<()> {
-    let img_path = std::env::args().nth(1).unwrap();
-    let mut img = Reader::open(img_path)?.decode()?.to_rgb8();
-    let file = std::fs::read_to_string(std::env::args().nth(2).unwrap()).expect("can open file");
+    let opt = Opt::from_args();
+    let mut img = Reader::open(opt.input)?.decode()?.to_rgb8();
+    let mut path = home_dir().unwrap();
+    path.push(".config/themify/palettes/");
+    path.push(&opt.palette);
+    let path = path.to_string_lossy().to_owned().to_string();
+    println!("{}", path);
+    let file = std::fs::read_to_string(path).expect("can open file");
     let palette: Vec<_> = file
         .split("\n")
         .into_iter()
@@ -24,7 +49,7 @@ fn main() -> image::error::ImageResult<()> {
             img.put_pixel(x, y, pixel);
         }
     }
-    img.save(std::env::args().nth(3).unwrap())?;
+    img.save(opt.output)?;
     Ok(())
 }
 
